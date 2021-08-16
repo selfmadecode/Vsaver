@@ -1,0 +1,100 @@
+﻿@model VSaver.Web.Models.AgentRegisterViewModel
+@{
+    ViewBag.Title = "Agent Register";
+}
+
+<style>
+    .commonSection {
+        margin-top: 95px;
+        background-color: #082d19;
+        color: white;
+    }
+    h4 {
+        color: white;
+    }
+    #registerBtn {
+        background-color: #ffc107;
+        color: #07294d;
+        font-weight: bolder;
+    }
+    #registerBtn:hover {
+        color: white;
+    }
+</style>
+<section class="commonSection">
+    <div class="container">
+        @using (Html.BeginForm("AgentRegister", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Create an Agent account.</h4>
+            <hr />
+            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                @Html.Label($"Your Tag number is: {Model.AgentId}", new { @class = "col-md-4 control-label" })<small>(Auto Generated)</small>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.AgentId, new { @class = "form-control", PlaceHolder = "Tag Number", @Value = Model.AgentId, @readonly = "readonly" })
+                </div>
+            </div>*@
+            <div class="form-group">
+                @Html.LabelFor(l => l.Role, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Role, new SelectList(Model.RolesInDb, "Role"), "Select Role", new { @class = "form-control textbox" })
+                    @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="registerBtn" type="submit" class="btn btn-default" value="Register" />
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

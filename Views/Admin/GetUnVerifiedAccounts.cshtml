@@ -1,0 +1,124 @@
+﻿@model IEnumerable<VSaver.Web.Models.ViewModel.CustomerAndAccountViewModel>
+
+@{
+    ViewBag.Title = "GetUnVerifiedAccount";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+    <style>
+        .Unverified {
+            color: #dc3545;
+            font-weight: bolder;
+        }
+
+        .fontweight {
+            font-weight: bolder;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0">Unverified Accounts</h4>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="card-title">Default Datatable</h4>
+                        <p class="card-title-desc">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget mauris congue,
+                            consequat ipsum non, gravida erat. Nulla faucibus et arcu nec ultricies.
+                        </p>
+
+                        @if (!Model.Any())
+                        {
+                            <h1>No Unverified Accounts</h1>
+                        }
+                        else
+                        {
+                            <table id="datatable" class="table table-bordered nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Account Status</th>
+                                        <th>Account Number</th>
+                                        <th>Status</th>
+                                        <th>Amount</th>
+                                        <th>Created On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @foreach (var customer in Model)
+                                    {
+                                        <tr>
+                                            <td> @customer.FirstName  @customer.LastName </td>
+                                            @if ((customer.AccountVerified == false) || (customer.AccountVerified == null))
+                                            {
+                                                <td class="text-danger"> unverified </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-success"> verified </td>
+                                            }
+                                            <td> @customer.AccountNumber </td>
+                                            <td> @customer.AccountStatus </td>
+                                            <td> @customer.Balance </td>
+                                            <td> @customer.CreatedAt.ToLongDateString() </td>
+                                            <td>
+                                                <div>
+                                                    <a class="text-danger mr-2 fontweight" data-placement="top" title="" data-original-title="View"
+                                                       href="@Url.Action("ProcessAccount", "Admin", new { id = customer.Id, condition = false }) "><i data-toggle="tooltip" data-placement="top" title="Reject" class="ri-close-fill"></i></a>
+                                                    <a class="text-success mr-2 fontweight"
+                                                       href="@Url.Action("ProcessAccount", "Admin", new { id = customer.Id, condition = true })"><i data-toggle="tooltip" data-placement="top" title="Approve" class="ri-check-fill"></i></a>
+                                                    @*<a class="text-info fontweight"
+                                                       href="@Url.Action("CustomerDetails", "Admin", new { id = customer.Id})"><i data-toggle="tooltip" data-placement="top" title="Info" class="ri-pencil-fill"></i></a>*@
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+
+
+
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    </div> <!-- container-fluid -->
+    
+
+</div>
+<!-- End Page-content -->
+
+
+<script src="~/Content/Template/assets/libs/jquery/jquery.min.js"></script>
+<script src="~/Content/Template/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/Template/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+    })
+</script>
+

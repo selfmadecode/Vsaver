@@ -1,0 +1,75 @@
+﻿@model IEnumerable<VSaver.Web.Models.ViewModel.PaymentAgentTransactionListViewModel>
+
+@{
+    ViewBag.Title = "PaymentAgentIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #container {
+        margin-top: 120px;
+    }
+    .Approved {
+        color: green;
+    }
+
+    .Processing {
+        color: orange;
+    }
+
+    .Declined {
+        color: red
+    }
+</style>
+
+<div class="container">
+    <div id="container">
+        <h4>Payment Agent Dashboard</h4>
+
+        <div>
+            @Html.ActionLink("Withdraw", "Withdrawal", "Agent", null, new { @class = "btn btn-warning" })
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Deposit", "Deposit", "Agent", null, new { @class = "btn btn-success" })
+        </div>
+
+    </div>
+
+    @if ((Model == null) || (!Model.Any()))
+    {
+        <h1>No Transactions yet</h1>
+    }
+    else
+    {
+        <h3>Transactions</h3>
+
+        <table id="datatable" class="table table-bordered nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Transaction Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Customer Name</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var transaction in Model)
+                {
+                    <tr>
+                        <td> @transaction.Amount </td>
+                        <td> @transaction.TransactionType </td>
+                        <td> @transaction.TransactionStatus</td>
+                        <td> @transaction.DateOfTransaction.ToLongDateString() </td>
+                        <td> @transaction.CustomerName </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+

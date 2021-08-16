@@ -1,0 +1,120 @@
+﻿@model VSaver.Web.Models.ViewModel.CustomerTransactionHistory
+
+@{
+    ViewBag.Title = "CustomerDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .Approved{
+        color: darkgreen;
+    }
+    .Declined {
+        color: red;
+    }
+    .Processing{
+        color: orange;
+    }
+</style>
+
+<h2>Customer Details</h2>
+
+<div class="page-content">
+    @if (Model == null)
+    {
+        <h1>No History</h1>
+    }
+    else
+    {
+
+
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0">Editable Table</h4>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="card-title">Account History</h4>
+                            <p class="card-title-desc">Table Edits is a lightweight jQuery plugin for making table rows editable.</p>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer Name</th>
+                                            <th>Account Created by:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td> @Model.Customer.FirstName @Model.Customer.LastName</td>
+                                            <td> @Model.Customer.Agent.FirstName @Model.Customer.Agent.LastName</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div>
+                                    <table id="datatable" class="table table-bordered nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%" ;>
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th>Transaction Type</th>
+                                                <th>Agent</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (!Model.Transactions.Any())
+                                            {
+                                                <tr>
+                                                    <td>No Transaction</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                foreach (var transaction in Model.Transactions)
+                                                {
+                                                    <tr>
+                                                        <td> @transaction.DateOfTransaction.ToLongDateString() </td>
+                                                        <td> @transaction.Amount </td>
+                                                        <td> @transaction.TransactionType </td>
+                                                        <td> @transaction.Agent.FirstName @transaction.Agent.LastName</td>
+                                                        <td class="@transaction.TransactionStatus"> @transaction.TransactionStatus</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div>
+    }
+</div>
+
+<script src="~/Content/Template/assets/libs/jquery/jquery.min.js"></script>
+<script src="~/Content/Template/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/Template/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+    })
+</script>

@@ -1,0 +1,151 @@
+﻿@model VSaver.Web.Models.ViewModel.WithdrawalViewModel
+@{
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+        #container {
+            margin-top: 120px;
+            background-image: url(../../Content/UserUI/images/dollar.png);
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: contain;
+            /*background-color: #07294d;*/
+            background-color: #082d19;
+            background-blend-mode: soft-light;
+            color: white;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #ffc107;
+        }
+    </style>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript"></script>
+</head>
+
+
+
+
+<div class="container">
+    <div id="container">
+        <div class="text-center">
+            <h2 style="color: white">Transaction</h2>
+        </div>
+
+        @using (Html.BeginForm("Withdraw", "Agent", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+
+            <div class="form-row col-md-10">
+                <div class="form-group col-md-10">
+                    @Html.LabelFor(m => m.AccountNumber, new { @class = "col-md-12 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", id = "account_number" })
+                        <span style="color: white; font-size: 12px;">Account Name: @ViewBag.CustomerName</span> <br />
+                        @Html.ValidationMessageFor(m => m.AccountNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.Label(" ", new { @class = "col-md-12 control-label" })
+
+                    <div class="form-group col-md-12">
+                        <button class="btn btn-success form-control" type="button" onclick="verifyName()">Verify </button>
+                    </div>
+                </div>
+            </div>
+                /*
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AccountNumber, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", id = "account_number" })
+                        <span style="color: white; font-size: 12px;">Account Name: @ViewBag.CustomerName</span>
+                        @Html.ValidationMessageFor(m => m.AccountNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-10">
+                        <button class="btn btn-success form-control" type="button" onclick="verifyName()">Verify </button>
+                    </div>
+                    @*<input class="form-control" type="text" readonly="readonly" name="CustomerName" value="@ViewBag.CustomerName" />*@
+                </div>
+                */
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Amount, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PIN, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.PIN, new { @class = "form-control", type = "password" })
+                        @Html.ValidationMessageFor(m => m.PIN, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TransactionType, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.TransactionType, new { @class = "form-control", @Value = VSaver.Web.Models.Entities.TransactionType.Withdrawal, @readonly = "readonly" })
+                        @Html.ValidationMessageFor(m => m.TransactionType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @ViewBag.TransactionStatus
+                        <button type="submit" class="btn">Execute</button>
+                    </div>
+                </div>
+                }
+
+            </div>
+        </div>
+@*<script type="text/javascript"></script>*@
+
+
+<script>
+    $(document).ready(function () {
+        //alert("Ready");
+    })
+</script>
+<script>
+    function verifyName() {
+
+        //alert("nameff");
+        var Number = document.getElementById("account_number").value;
+        //alert(Number);
+
+        var url = "GetCustomerAccountName?accountNumber=" + Number;
+        //alert(url);
+        //await fetch(url);
+        window.location.href = url;
+
+       // Url.Action("GetCustomerAccountName", "Agent", new { accountNumber = Model.AccountNumber })
+
+    }
+</script>
+
+
+@section Scripts {
+
+
+}
+
+
+
+
+
+

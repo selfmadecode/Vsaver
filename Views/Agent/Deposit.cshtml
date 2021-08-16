@@ -1,0 +1,78 @@
+﻿@model VSaver.Web.Models.ViewModel.DepositViewModel
+@{
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #container {
+        margin-top: 120px;
+        background-image: url(../../Content/UserUI/images/dollar.png);
+        background-repeat: no-repeat;
+        background-position: right;
+        background-size: contain;
+        /*background-color: #07294d;*/
+        background-color: #082d19;
+        background-blend-mode: soft-light;
+        color: white;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        background-color: #ffc107;
+    }
+</style>
+
+
+<div class="container">
+    <div id="container">
+        <div class="text-center">
+            <h2 style="color: white">Transaction</h2>
+        </div>
+
+        @using (Html.BeginForm("Deposit", "Agent", FormMethod.Post, new { @class = "form - horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.AccountNumber, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AccountNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Amount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TransactionType, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.TransactionType, new { @class = "form-control", @Value = VSaver.Web.Models.Entities.TransactionType.Deposit, @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.TransactionType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @ViewBag.TransactionStatus
+                    <button type="submit" class="btn">Execute</button>
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

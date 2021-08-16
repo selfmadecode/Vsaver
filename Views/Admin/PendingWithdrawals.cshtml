@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<VSaver.Web.Models.ViewModel.PendingTransactionsViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Pending Withdrawal</h2>
+
+@*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }*@
+
+<head>
+    <style>
+        .Unverified {
+            color: #dc3545;
+            font-weight: bolder;
+        }
+
+        .fontweight {
+            font-weight: bolder;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    @*<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">*@
+</head>
+
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0">Datatables</h4>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="card-title">Default Datatable</h4>
+                        <p class="card-title-desc">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget mauris congue,
+                            consequat ipsum non, gravida erat. Nulla faucibus et arcu nec ultricies.
+                        </p>
+
+                        @if (!Model.Any())
+                        {
+                            <h1>No Pending withdrawals</h1>
+                        }
+                        else
+                        {
+                            <table id="datatable" class="table table-bordered nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Account Number</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Agent Name</th>
+                                        <th>Transaction Type</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    @foreach (var transaction in Model)
+                                    {
+                                        <tr>
+                                            <td> @transaction.AccountNumber </td>
+                                            <td> @transaction.Amount </td>
+                                            <td> @transaction.DateOfTransaction.ToLongDateString() </td>
+                                            <td> @transaction.AgentName </td>
+                                            <td> @transaction.TransactionType</td>
+                                            <td>
+                                                <div>
+                                                    <a class="text-success mr-2 fontweight"
+                                                       href="@Url.Action("ApproveWithdrawal", "Admin", new { id = transaction.Id, accountNumber = transaction.AccountNumber, amount = transaction.Amount}) "><i data-toggle="tooltip" data-placement="top" title="Approve" class="bi bi-check-lg"></i></a>
+                                                    <a class="text-danger mr-2 fontweight"
+                                                       href="@Url.Action("DisapproveWithdrawal", "Admin", new { id = transaction.Id, accountNumber = transaction.AccountNumber, amount = transaction.Amount})"><i data-toggle="tooltip" data-placement="top" title="Reject" class="bi bi-x-lg"></i></a> 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    </div> <!-- container-fluid -->
+
+
+</div>
+<!-- End Page-content -->
+
+
+<script src="~/Content/Template/assets/libs/jquery/jquery.min.js"></script>
+<script src="~/Content/Template/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/Template/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+    })
+</script>

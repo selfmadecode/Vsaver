@@ -1,0 +1,56 @@
+﻿@model IEnumerable<VSaver.Web.Models.ViewModel.CustomerAndAccountViewModel>
+@{
+    ViewBag.Title = "AgentDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #container{
+        margin-top: 145px;
+    }
+</style>
+
+<div class="container">
+    <div id="container">
+        <div>
+            @Html.ActionLink("Create Customer", "CreateCustomer", "Agent", null, new {@class = "btn btn-success" })
+        </div>
+        <br />
+        <div>
+            @if ((Model == null) || !(Model.Any()))
+            {
+                <h1>No Account</h1>
+            }
+            else
+            {
+                <h1>Customers</h1>
+                <table id="datatable" class="table table-bordered nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Account Number</th>
+                            <th>Date Created</th>
+                            <th>Account Status</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var customer in Model)
+                        {
+                            <tr>
+                                <td> @customer.FirstName</td>
+                                <td> @customer.LastName </td>
+                                <td> @customer.AccountNumber </td>
+                                <td> @customer.CreatedAt.ToLongDateString() </td>
+                                <td> @customer.AccountStatus </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            </div>
+    </div>
+</div>
+

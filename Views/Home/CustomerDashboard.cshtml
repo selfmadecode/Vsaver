@@ -1,0 +1,132 @@
+﻿@model VSaver.Web.Models.ViewModel.CustomerAccountAndTransactionViewModel
+
+@{
+    ViewBag.Title = "Customer Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">*@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<style>
+    .commonSection {
+        margin-top: 95px;
+        background-color: rgba(230, 228, 228, 0.979);
+    }
+
+    #Details {
+        /*height: 250px;*/
+        width: 100%;
+    }
+    .welcomeTab {
+        background-color: #07294d;
+        border-radius: 10px;
+        margin-top: -50px;
+        margin-bottom: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        background-image: url(../../Content/UserUI/images/userdashboard1.png);
+        background-repeat: no-repeat;
+        background-position: right;
+        background-blend-mode: multiply;
+    }
+    #tabs {
+        border-radius: 10px;
+        color: #082d19;
+        /*border: 1px solid #082d19;*/
+        background-color: white;
+        box-shadow:  1px 3px 10px black;
+    }
+    #tabs:hover {
+        cursor: pointer;
+        color: white;
+        background-color: #082d19;
+    }
+    .welcomeTab h1 {
+        color: #ffc107;
+    }
+    table{
+        color: black;
+    }
+    td{
+        background-color: ghostwhite;
+    }
+</style>
+
+<div class="commonSection">
+    <div class="container">
+        <div class="col-xs-12 col-sm-12 col-md-12 welcomeTab">
+            <h1>Hi, @Model.FirstName @Model.LastName</h1>
+            <p style="color: white; ">Welcome to your Dashboard </p>
+            <p style="color: white; font-size: 12px; margin-top: -20px;">@DateTime.UtcNow.ToLongDateString() <span> <i style="color: black " class="bi bi-calendar-event"></i> </span> </p>
+
+            <div class=" col-xs-12 col-sm-12 col-md-12 row text-center d-flex justify-content-center" id="Details">
+                <div id="tabs" class=" col-xs-3 col-md-4 h-75 pt-5 mx-auto">
+                    <i style="font-size: 50px;" class="bi bi-person-badge"></i>
+                    <p>Status: @Model.AccountStatus <span><i class="bi bi-patch-check-fill text-success"></i></span></p>
+                    <p style="margin-top: -15px; font-size: 14px">@Model.AccountNumber </p>
+                </div>
+                <div id="tabs" class="col-md-3 h-75 mx-auto pt-5">
+                    <i style="font-size: 50px;" class="bi bi-cash-stack"></i>
+                    <p style="font-weight: bolder">N: @Model.Balance</p>
+                    <p style="margin-top: -15px; font-size: 14px">Balance</p>
+                </div>
+                <div id="tabs" class="col-md-3 h-75 mx-auto pt-5">
+                    <i style="font-size: 50px;" class="bi bi-bank2"></i>
+                    <p style="font-weight: bolder">N: @Model.Interest</p>
+                    <p style="margin-top: -15px; font-size: 14px">ROI</p>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        <h1>Transactions</h1>
+
+        @if (Model.Transactions.Count() <= 0)
+        {
+            <h1>No transactions</h1>
+        }
+        else
+        {
+            <table id="datatable" class="table table-hover nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Agent</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var transaction in Model.Transactions)
+                    {
+                    <tr>
+                        <td> @transaction.Amount </td>
+                        <td> @transaction.TransactionType </td>
+                        @if (transaction.TransactionStatus == VSaver.Web.Models.Enums.TransactionStatus.Approved)
+                        {
+                            <td> <span class="badge badge-success">@transaction.TransactionStatus</span> </td>
+
+                        }
+                        else if (transaction.TransactionStatus == VSaver.Web.Models.Enums.TransactionStatus.Processing)
+                        {
+                            <td> <span class="badge badge-warning">@transaction.TransactionStatus</span> </td>
+
+                        }
+                        else if (transaction.TransactionStatus == VSaver.Web.Models.Enums.TransactionStatus.Declined)
+                        {
+                            <td> <span class="badge badge-danger">@transaction.TransactionStatus</span> </td>
+
+                        }
+                        <td> @transaction.DateOfTransaction.ToLongDateString() </td>
+                        <td> @transaction.AgentId</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+

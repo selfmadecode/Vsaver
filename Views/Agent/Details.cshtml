@@ -1,0 +1,150 @@
+﻿@model VSaver.Web.Models.ViewModel.CustomerViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #container {
+        color: white;
+        border-top: 1px solid black;
+        margin-top: 120px;
+        /*background-color: #082d19;*/
+        /*background-image: url(../../Content/UserUI/images/desk.png);*/
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-blend-mode: soft-light;
+    }
+
+    #deco {
+        /*background-color: #082d19;*/
+        background-image: url(../../Content/UserUI/images/desk.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: left;
+    }
+
+    #form {
+        background-color: #082d19;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    h3 {
+        font-size: 26px;
+        color: white;
+    }
+
+    label {
+        font-size: 14px;
+    }
+    /*#formContainer{*/
+    /*background-color: orangered;*/
+    /*border: 1px solid black;
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }*/
+    #LoginTab {
+        background-color: #07294d;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+</style>
+<div class="container">
+    <div id="container">
+        <h2 style="margin-top: 70px">Create an account</h2>
+
+        @using (Html.BeginForm("CreateCustomer", "Agent", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div id="formContainer" class="row col-md-12">
+                        <div id="LoginTab" class="col-md-4">
+                            <h3>Login Details</h3>
+                            <hr />
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(c => c.Email)
+                                @Html.TextBoxFor(c => c.Email, new { @class = "form-control", placeholder = "Email" })
+                                @Html.ValidationMessageFor(c => c.Email, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(c => c.Password)
+                                @Html.PasswordFor(c => c.Password, new { @class = "form-control", placeholder = "Password" })
+                                @Html.ValidationMessageFor(c => c.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(c => c.ConfirmPassword)
+                                @Html.PasswordFor(c => c.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                                @Html.ValidationMessageFor(c => c.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(c => c.PhoneNumber)
+                                @Html.TextBoxFor(c => c.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number" })
+                                @Html.ValidationMessageFor(c => c.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div id="form" class="form-row col-md-8">
+                            <div class="col-md-12">
+                                <h3>Persobal Details</h3>
+                                <hr />
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.FirstName)
+                                @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                                @Html.ValidationMessageFor(c => c.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.MiddleName)
+                                @Html.TextBoxFor(c => c.MiddleName, new { @class = "form-control", placeholder = "Middle Name" })
+                                @Html.ValidationMessageFor(c => c.MiddleName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.LastName)
+                                @Html.TextBoxFor(c => c.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                                @Html.ValidationMessageFor(c => c.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.NIN)
+                                @Html.TextBoxFor(c => c.NIN, new { @class = "form-control", placeholder = "NIN" })
+                                @Html.ValidationMessageFor(c => c.NIN, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.BVN)
+                                @Html.TextBoxFor(c => c.BVN, new { @class = "form-control", placeholder = "BVN" })
+                                @Html.ValidationMessageFor(c => c.BVN, "", new { @class = "text-danger" })
+                            </div>
+                            @*<div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.AgentId)
+                                @Html.TextBoxFor(c => c.AgentId, new { @class = "form-control", placeholder = "Agent Id" })
+                                @Html.ValidationMessageFor(c => c.AgentId, "", new { @class = "text-danger" })
+                            </div>*@
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.PIN)
+                                @Html.TextBoxFor(c => c.PIN, new { @class = "form-control", type = "password", placeholder = "Secret PIN" })
+                                @Html.ValidationMessageFor(c => c.PIN, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(c => c.Amount)
+                                @Html.TextBoxFor(c => c.Amount, new { @class = "form-control", placeholder = "Initial Deposit" })
+                                @Html.ValidationMessageFor(c => c.Amount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="deco" class="col-md-2">
+                    @*<img width="500" src="~/Content/UserUI/images/desk.png" alt="" />*@
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Customer</button>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
