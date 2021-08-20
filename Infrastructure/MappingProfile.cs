@@ -47,7 +47,7 @@ namespace VSaver.Web.Infrastructure
             Mapper.CreateMap<Customer, CustomerAccountAndTransactionViewModel>()
                 .ForMember(c => c.AccountNumber, opt => opt.MapFrom(c => c.Account.AccountNumber))
                 .ForMember(c => c.Balance, opt => opt.MapFrom(c => c.Account.Balance))
-                //.ForMember(c => c.Interest, opt => opt.MapFrom(c => c.Account.Interest))
+                .ForMember(c => c.Interest, opt => opt.MapFrom(c => c.Account.Interest))
                 //.ForMember(c => c.CreatedAt, opt => opt.MapFrom(c => c.Account.CreatedAt))
                 .ForMember(ct => ct.Transactions, opt => opt.MapFrom(ct => ct.Transactions));
           

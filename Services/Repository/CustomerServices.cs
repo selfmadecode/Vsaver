@@ -32,28 +32,44 @@ namespace VSaver.Web.Services.Repository
         }
         public async Task<bool> CreateCustomer(Customer customer, decimal initialDeposit, int pin, string customerUserId, string agentId)
         {
+            var accountNumber = GenerateCustomerAccountNumber();
+            //check if the account number is already in db
+
+            var agentCreatingAccount = GetAgent(agentId);
+
+            customer.Account = new Account
+            {
+                AccountNumber = accountNumber,
+                Balance = initialDeposit,
+                PIN = pin
+            };
+            customer.Agent = agentCreatingAccount;
+            //customer.Agent_Id = agentCreatingAccount.Id;
+            customer.UserId = customerUserId;
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
+
+
             try
             {
-                var accountNumber = GenerateCustomerAccountNumber();
-                //check if the account number is already in db
+                await SendMailNotification(subject: "GREETINGS FROM VISION SAVINGS",
+                    body: $"Thank you so much for allowing us to help you with your recent account opening." +
+                    $"We are committed to providing our customers with the highest level of service and the most" +
+                    $"innovative savings experience possible. \n \n" +
 
-                var agentCreatingAccount = GetAgent(agentId);
-
-                customer.Account = new Account
-                {
-                    AccountNumber = accountNumber,
-                    Balance = initialDeposit,
-                    PIN = pin
-                };
-                customer.Agent = agentCreatingAccount;
-                //customer.Agent_Id = agentCreatingAccount.Id;
-                customer.UserId = customerUserId;
-                _context.Customers.Add(customer);
-                await _context.SaveChangesAsync();
-
-                
-                await SendMailNotification(subject: "Vsaver Welcomes you",
-                    body: $"We are delighted to serve you, your account number is: {accountNumber}",
+                    $"We are very glad you chose us as your financial savings institution and hope you will take advantage" +
+                    $"of our wide variety of savings and investment, all designed to meet your financial needs." +
+                    
+                    $"\n \nYour account number is: {accountNumber}" +
+                    $"\n \n" +
+                    $"For more detailed information about any of our products or services, please refer to our website, www.vsavings.com, or visit any of our convenient locations." +
+                    $"You may contact us by phone at +2349020267216" +
+                    $"\n \n" +
+                    $"Please do not hesitate to contact me, should you have any questions. We will contact you in the very near future to" +
+                    $"ensure you are completely satisfied with the services you have received thus far." +
+                    $"\n \n" +
+                    $"Respectfully \n \n" +
+                    $"Oladipo A. (CEO)",
                     destination: customer.Email);
 
                await _smsNotification.SendSmsNotification(
@@ -63,7 +79,6 @@ namespace VSaver.Web.Services.Repository
             }
             catch (Exception ex)
             {
-
                 Debug.WriteLine(ex.Message);
             }
 
@@ -72,13 +87,15 @@ namespace VSaver.Web.Services.Repository
 
         private async Task SendMailNotification(string subject, string body, string destination)
         {
-            var message = new IdentityMessage
-            {
-                Subject = subject,
-                Body = body,
-                Destination = destination,
-            };
-            await _messageService.SendAsync(message);
+            await _smsNotification.SendEmailNotification(body, destination, subject);
+
+            //var message = new IdentityMessage
+            //{
+            //    Subject = subject,
+            //    Body = body,
+            //    Destination = destination,
+            //};
+            //await _messageService.SendAsync(message);
         }
         
         private double GenerateCustomerAccountNumber()

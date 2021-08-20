@@ -16,6 +16,7 @@ using VSaver.Web.Services.Interfaces;
 
 namespace VSaver.Web.Controllers
 {
+    [Authorize]
     public class AgentController : Controller
     {
         private ICustomerServices _customerServices;
@@ -64,7 +65,7 @@ namespace VSaver.Web.Controllers
         }
         // GET: Dashboard
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
             if (User.IsInRole("AccountAgent"))
@@ -80,13 +81,13 @@ namespace VSaver.Web.Controllers
             return RedirectToAction("CustomerDashboard", "Home");
         }
 
-        //[Authorize(Roles = "AccountAgent")]
+        [Authorize(Roles = "AccountAgent")]
         public ViewResult CreateCustomer()
         {
             return View("Details");
         }
 
-        // [Authorize(Roles = "AccountAgent")]
+        [Authorize(Roles = "AccountAgent")]
         [HttpPost]
         public async Task<ActionResult> CreateCustomer(CustomerViewModel customerViewModel)
         {
@@ -141,6 +142,8 @@ namespace VSaver.Web.Controllers
                 ModelState.AddModelError("", error);
             }
         }
+
+        [Authorize(Roles = "AccountAgent")]
         public async Task<ViewResult> GetAccountsCreatedByAgent()
         {
             string loggedInUser = User.Identity.GetUserId();
@@ -151,6 +154,7 @@ namespace VSaver.Web.Controllers
             return View("AgentDashboard", customers);
         }
 
+        [Authorize(Roles = "AccountAgent")]
         public async Task<ViewResult> GetTransactionsByAgent()
         {
             string loggedInUser = User.Identity.GetUserId();

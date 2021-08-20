@@ -16,7 +16,7 @@ namespace VSaver.Web.Services.Repository
     {
         public Task SendSmsNotification(string body, string destination)
         {
-            
+            /*            
             string accountSID = WebConfigurationManager.AppSettings["TwilloAccountSID"];
             string authToken = WebConfigurationManager.AppSettings["TwilloAccountAuthToken"];
 
@@ -26,7 +26,7 @@ namespace VSaver.Web.Services.Repository
                 body: body,
                 from: new Twilio.Types.PhoneNumber("+18653209925"),
                 to: new Twilio.Types.PhoneNumber(destination));
-
+            */
             
             return Task.FromResult(0);
             
@@ -43,7 +43,7 @@ namespace VSaver.Web.Services.Repository
 
             var email = new SendGridMessage()
             {
-                From = new EmailAddress("kentekz61@gmail.com", user),
+                From = new EmailAddress("hello@vsavings.com.ng", user),
                 Subject = subject,
                 PlainTextContent = body,
                 HtmlContent = body

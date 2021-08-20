@@ -25,7 +25,7 @@ namespace VSaver.Web.Controllers
                 return RedirectToAction("Index", "Admin");
             return View();
         }
-
+        [Authorize]
         public ActionResult CustomerDashboard()
         {
             var userId = User.Identity.GetUserId();
