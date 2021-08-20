@@ -28,6 +28,12 @@
 
 <div class="container">
     <div id="container">
+        <div>
+            @if ((string)TempData["TransactionStatus"] == "success")
+            {
+                @Html.Partial("_SwaTransactionSuccessNotification")
+            }
+        </div>
         <div class="text-center">
             <h2 style="color: white">Transaction</h2>
         </div>

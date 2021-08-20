@@ -336,6 +336,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\sweetalert\bootstrap-sweetalert.png" />
+    <Content Include="Content\sweetalert\docs.css" />
+    <Content Include="Content\sweetalert\sweet-alert.css" />
+    <Content Include="Content\sweetalert\thumbs-up.jpg" />
     <Content Include="Content\Template\assets\css\app-dark.min.css" />
     <Content Include="Content\Template\assets\css\app-rtl.min.css" />
     <Content Include="Content\Template\assets\css\app.min.css" />
@@ -651,6 +655,9 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\sweetalert\sweet-alert-animations.less" />
+    <Content Include="Content\sweetalert\sweet-alert-combine.less" />
+    <Content Include="Content\sweetalert\sweet-alert.less" />
     <None Include="Properties\PublishProfiles\visionsavings - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\VsaverWeb - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -724,6 +731,8 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Views\Shared\_SwaSuccessPartial.cshtml" />
+    <Content Include="Views\Shared\_SwaTransactionSuccessNotification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

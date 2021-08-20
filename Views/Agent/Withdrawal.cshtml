@@ -32,10 +32,14 @@
 </head>
 
 
-
-
 <div class="container">
     <div id="container">
+        <div>
+            @if ((string)TempData["TransactionStatus"] == "success")
+            {
+                @Html.Partial("_SwaTransactionSuccessNotification")
+            }
+        </div>
         <div class="text-center">
             <h2 style="color: white">Transaction</h2>
         </div>
@@ -63,55 +67,55 @@
                     </div>
                 </div>
             </div>
-                /*
-                <div class="form-group">
-                    @Html.LabelFor(m => m.AccountNumber, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", id = "account_number" })
-                        <span style="color: white; font-size: 12px;">Account Name: @ViewBag.CustomerName</span>
-                        @Html.ValidationMessageFor(m => m.AccountNumber, "", new { @class = "text-danger" })
-                    </div>
+            /*
+            <div class="form-group">
+                @Html.LabelFor(m => m.AccountNumber, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.AccountNumber, new { @class = "form-control", id = "account_number" })
+                    <span style="color: white; font-size: 12px;">Account Name: @ViewBag.CustomerName</span>
+                    @Html.ValidationMessageFor(m => m.AccountNumber, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group">
-                    <div class="form-group col-md-10">
-                        <button class="btn btn-success form-control" type="button" onclick="verifyName()">Verify </button>
-                    </div>
-                    @*<input class="form-control" type="text" readonly="readonly" name="CustomerName" value="@ViewBag.CustomerName" />*@
-                </div>
-                */
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Amount, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PIN, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.PIN, new { @class = "form-control", type = "password" })
-                        @Html.ValidationMessageFor(m => m.PIN, "", new { @class = "text-danger" })
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.TransactionType, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.TransactionType, new { @class = "form-control", @Value = VSaver.Web.Models.Entities.TransactionType.Withdrawal, @readonly = "readonly" })
-                        @Html.ValidationMessageFor(m => m.TransactionType, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @ViewBag.TransactionStatus
-                        <button type="submit" class="btn">Execute</button>
-                    </div>
-                </div>
-                }
-
             </div>
+            <div class="form-group">
+                <div class="form-group col-md-10">
+                    <button class="btn btn-success form-control" type="button" onclick="verifyName()">Verify </button>
+                </div>
+                @*<input class="form-control" type="text" readonly="readonly" name="CustomerName" value="@ViewBag.CustomerName" />*@
+            </div>
+            */
+            <div class="form-group">
+                @Html.LabelFor(m => m.Amount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PIN, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.PIN, new { @class = "form-control", type = "password" })
+                    @Html.ValidationMessageFor(m => m.PIN, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TransactionType, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.TransactionType, new { @class = "form-control", @Value = VSaver.Web.Models.Entities.TransactionType.Withdrawal, @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.TransactionType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @ViewBag.TransactionStatus
+                    <button type="submit" class="btn">Execute</button>
+                </div>
+            </div>
+        }
+
+    </div>
         </div>
 @*<script type="text/javascript"></script>*@
 

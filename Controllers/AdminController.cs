@@ -12,7 +12,7 @@ using VSaver.Web.Services.Interfaces;
 
 namespace VSaver.Web.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IAdminServices _adminServices;
