@@ -122,7 +122,8 @@ namespace VSaver.Web.Controllers
                         return View(model);
                 }
             }
-            return View("Error");
+            ModelState.AddModelError("", "Confirm Login details.");
+            return View(model);
         }
 
         //
@@ -268,11 +269,13 @@ namespace VSaver.Web.Controllers
                     
                     return View("Info");
                     */
-                    
+
                     //Dont sign the user in                    
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    
-                    return RedirectToAction("Index", "Home");
+                    TempData["AgentRegistered"] = "Agent has been registered";
+
+                    return RedirectToAction("AgentRegister");
+                    //return View(agent);
                 }
                 AddErrors(result);
             }

@@ -184,16 +184,15 @@ namespace VSaver.Web.Services.Repository
                             return TransactionStatus.InsufficientFunds;
                         }
                     }
-
                     return TransactionStatus.InvalidAmount;
                 }
-
                 return TransactionStatus.AccountNotFound;
         }
 
         public TransactionStatus DepositIntoUserAccount(DepositViewModel transaction, string agentId)
         {            
                 var customerAccount = _context.Customers
+                .Include(a =>a.Account)
                 .FirstOrDefault(a => a.Account.AccountNumber == transaction.AccountNumber);
 
                 var accountBalance = customerAccount.Account.Balance;
@@ -278,6 +277,7 @@ namespace VSaver.Web.Services.Repository
 
         private Customer GetCustomerAccount(double AccountNumber)
             => _context.Customers
+                .Include(a => a.Account)
                 .FirstOrDefault(a => a.Account.AccountNumber == AccountNumber);
     }
 }

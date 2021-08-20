@@ -68,6 +68,9 @@ namespace VSaver.Web.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("Index", "Admin");
+
             if (User.IsInRole("AccountAgent"))
                 return RedirectToAction("GetAccountsCreatedByAgent");
 
@@ -127,7 +130,11 @@ namespace VSaver.Web.Controllers
 
 
                     if (result)
+                    {
+                        TempData["CustomerAccountCreated"] = "success";
                         return RedirectToAction("GetAccountsCreatedByAgent");
+                    }
+                
                 }
 
                 AddErrors(identityResult);            
@@ -154,7 +161,7 @@ namespace VSaver.Web.Controllers
             return View("AgentDashboard", customers);
         }
 
-        [Authorize(Roles = "AccountAgent")]
+        [Authorize(Roles = "PaymentAgent")]
         public async Task<ViewResult> GetTransactionsByAgent()
         {
             string loggedInUser = User.Identity.GetUserId();
@@ -166,21 +173,21 @@ namespace VSaver.Web.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "PaymentAgent")]
+        [Authorize(Roles = "PaymentAgent")]
         public ViewResult Deposit()
         {
             return View();
         }
 
         [HttpGet]
-        //[Authorize(Roles = "PaymentAgent")]
+        [Authorize(Roles = "PaymentAgent")]
         public ViewResult Withdrawal()
         {
             return View();
         }
 
         [HttpPost]
-        //[Authorize(Roles = "PaymentAgent")]
+        [Authorize(Roles = "PaymentAgent")]
         public ViewResult Deposit(DepositViewModel transaction)
         {
             if (!ModelState.IsValid)
@@ -202,6 +209,7 @@ namespace VSaver.Web.Controllers
                     return View(transaction);
 
                 case TransactionStatus.Successful:
+                    TempData["TransactionStatus"] = "success";
                     ViewBag.TransactionStatus = "Transaction Successful";
                     break;
                 case TransactionStatus.Failed:
@@ -212,6 +220,7 @@ namespace VSaver.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "PaymentAgent")]
         public ViewResult Withdraw(WithdrawalViewModel transaction)
         {
             if (!ModelState.IsValid)
@@ -240,6 +249,7 @@ namespace VSaver.Web.Controllers
                     return View("Withdrawal", transaction);
 
                 case TransactionStatus.Successful:
+                    TempData["TransactionStatus"] = "success";
                     ViewBag.TransactionStatus = "Transaction Processing";
                     break;
                 case TransactionStatus.Failed:
@@ -249,6 +259,7 @@ namespace VSaver.Web.Controllers
             return View("Withdrawal");
         }
 
+        [Authorize(Roles = "PaymentAgent")]
         public ActionResult GetCustomerAccountName(double accountNumber)
         {
             if (!ModelState.IsValid)

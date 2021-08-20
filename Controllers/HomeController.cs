@@ -21,13 +21,12 @@ namespace VSaver.Web.Controllers
         }
         public ActionResult Index()
         {
-            if (User.IsInRole("Admin"))
-                return RedirectToAction("Index", "Admin");
             return View();
         }
         [Authorize]
         public ActionResult CustomerDashboard()
-        {
+        {          
+
             var userId = User.Identity.GetUserId();
 
             var customer = _customerServices.GetCustomerAndTransactionDetails(userId);
