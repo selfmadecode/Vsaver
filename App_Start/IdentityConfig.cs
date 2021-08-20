@@ -23,14 +23,14 @@ namespace VSaver.Web
     {
         public async Task SendAsync(IdentityMessage message)
         {
-
+            
             var apiKey = WebConfigurationManager.AppSettings["KeyMain"];
             var user = WebConfigurationManager.AppSettings["user"];
 
             var mailClient = new SendGridClient(apiKey);
             var email = new SendGridMessage()
             {
-                From = new EmailAddress("kentekz61@gmail.com", user),
+                From = new EmailAddress("hello@vsavings.com.ng", user),
                 Subject = message.Subject,
                 PlainTextContent = message.Body,
                 HtmlContent = message.Body
@@ -49,6 +49,7 @@ namespace VSaver.Web
     {
         public Task SendAsync(IdentityMessage message)
         {
+            /*
             string accountSID = WebConfigurationManager.AppSettings["TwilloAccountSID"];
             string authToken = WebConfigurationManager.AppSettings["TwilloAccountAuthToken"];
 
@@ -60,6 +61,7 @@ namespace VSaver.Web
                 to: new Twilio.Types.PhoneNumber(message.Destination));
 
             // Plug in your SMS service here to send a text message.
+            */
             return Task.FromResult(0);
         }
     }
